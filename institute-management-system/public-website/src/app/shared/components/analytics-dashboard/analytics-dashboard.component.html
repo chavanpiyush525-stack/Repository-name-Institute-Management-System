@@ -1,0 +1,74 @@
+@if (isVisible) {
+  <div class="analytics-dashboard">
+    <div class="dashboard-header">
+      <h3>Conversion Analytics</h3>
+      <button class="refresh-btn" (click)="refreshMetrics()">
+        <span>🔄</span>
+        Refresh
+      </button>
+    </div>
+    
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-value">{{ metrics.totalCtaClicks || 0 }}</div>
+        <div class="metric-label">CTA Clicks</div>
+      </div>
+      
+      <div class="metric-card">
+        <div class="metric-value">{{ metrics.totalFormSubmissions || 0 }}</div>
+        <div class="metric-label">Form Submissions</div>
+      </div>
+      
+      <div class="metric-card">
+        <div class="metric-value">{{ metrics.totalCourseViews || 0 }}</div>
+        <div class="metric-label">Course Views</div>
+      </div>
+      
+      <div class="metric-card">
+        <div class="metric-value">{{ metrics.totalPageViews || 0 }}</div>
+        <div class="metric-label">Page Views</div>
+      </div>
+    </div>
+    
+    @if (metrics.conversionsByLocation && Object.keys(metrics.conversionsByLocation).length > 0) {
+      <div class="conversions-by-location">
+        <h4>Conversions by Location</h4>
+        <div class="location-list">
+          @for (location of Object.keys(metrics.conversionsByLocation); track location) {
+            <div class="location-item">
+              <span class="location-name">{{ location }}</span>
+              <span class="location-count">{{ metrics.conversionsByLocation[location] }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+    
+    @if (metrics.recentEvents && metrics.recentEvents.length > 0) {
+      <div class="recent-events">
+        <h4>Recent Events</h4>
+        <div class="events-list">
+          @for (event of metrics.recentEvents; track event.timestamp) {
+            <div class="event-item">
+              <span class="event-type">{{ event.type }}</span>
+              <span class="event-action">{{ event.action }}</span>
+              <span class="event-location">{{ event.location }}</span>
+              <span class="event-time">{{ event.timestamp | date:'short' }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+    
+    <button class="close-btn" (click)="toggleVisibility()">
+      Close Dashboard
+    </button>
+  </div>
+}
+
+<!-- Toggle button (always visible in dev mode) -->
+@if (!isVisible && !environment.production) {
+  <button class="dashboard-toggle" (click)="toggleVisibility()">
+    📊 Analytics
+  </button>
+}

@@ -1,0 +1,140 @@
+<section class="testimonials-section">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="section-header">
+      <h2 class="section-title">What Our Students Say</h2>
+      <p class="section-subtitle">
+        Hear from our successful graduates who have transformed their careers with our courses
+      </p>
+    </div>
+
+    <!-- Testimonials Carousel -->
+    <div class="testimonials-carousel" [class.loading]="isLoading">
+      <div class="carousel-container">
+        <!-- Navigation Arrows -->
+        <button 
+          class="nav-arrow nav-prev" 
+          (click)="prevSlide()"
+          [disabled]="isLoading"
+          aria-label="Previous testimonial"
+        >
+          <span class="arrow-icon">‹</span>
+        </button>
+        
+        <button 
+          class="nav-arrow nav-next" 
+          (click)="nextSlide()"
+          [disabled]="isLoading"
+          aria-label="Next testimonial"
+        >
+          <span class="arrow-icon">›</span>
+        </button>
+
+        <!-- Testimonials Grid -->
+        <div class="testimonials-grid">
+          <div 
+            class="testimonial-card"
+            *ngFor="let testimonial of getVisibleTestimonials(); let i = index"
+            [style.animation-delay]="(i * 0.1) + 's'"
+          >
+            <!-- Quote Icon -->
+            <div class="quote-icon">
+              <span>"</span>
+            </div>
+            
+            <!-- Rating Stars -->
+            <div class="rating">
+              <span 
+                class="star" 
+                *ngFor="let star of getStarArray(testimonial.rating || 5)"
+                [class.filled]="star === 1"
+              >
+                ★
+              </span>
+            </div>
+            
+            <!-- Testimonial Content -->
+            <div class="testimonial-content">
+              <p class="testimonial-text">{{ testimonial.content }}</p>
+            </div>
+            
+            <!-- Student Info -->
+            <div class="student-info">
+              <div class="student-avatar">
+                <img 
+                  *ngIf="testimonial.image" 
+                  [src]="testimonial.image" 
+                  [alt]="testimonial.name"
+                  class="avatar-image"
+                >
+                <div 
+                  *ngIf="!testimonial.image" 
+                  class="avatar-placeholder"
+                >
+                  {{ testimonial.name.charAt(0) }}
+                </div>
+              </div>
+              
+              <div class="student-details">
+                <h4 class="student-name">{{ testimonial.name }}</h4>
+                <p class="student-role">{{ testimonial.role }}</p>
+                <p class="student-course" *ngIf="testimonial.course">
+                  <span class="course-label">Course:</span> {{ testimonial.course }}
+                </p>
+              </div>
+            </div>
+            
+            <!-- Card Background -->
+            <div class="card-background"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carousel Indicators -->
+      <div class="carousel-indicators">
+        <button
+          *ngFor="let testimonial of testimonials; let i = index"
+          class="indicator"
+          [class.active]="i === currentSlide"
+          (click)="goToSlide(i)"
+          [attr.aria-label]="'Go to testimonial ' + (i + 1)"
+        ></button>
+      </div>
+    </div>
+
+    <!-- Success Stories Stats -->
+    <div class="success-stats">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-number">95%</div>
+          <div class="stat-label">Job Placement Rate</div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">💰</div>
+          <div class="stat-number">40%</div>
+          <div class="stat-label">Average Salary Increase</div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-number">4.9/5</div>
+          <div class="stat-label">Student Satisfaction</div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">🚀</div>
+          <div class="stat-number">3 Months</div>
+          <div class="stat-label">Average Time to Job</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Background Elements -->
+  <div class="background-elements">
+    <div class="bg-pattern pattern-1"></div>
+    <div class="bg-pattern pattern-2"></div>
+  </div>
+</section>

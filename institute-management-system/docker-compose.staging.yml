@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  # Backend API Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=staging
+      - DATABASE_URL=${STAGING_DATABASE_URL}
+      - DATABASE_USERNAME=${STAGING_DATABASE_USERNAME}
+      - DATABASE_PASSWORD=${STAGING_DATABASE_PASSWORD}
+      - JWT_SECRET=${STAGING_JWT_SECRET}
+      - CORS_ALLOWED_ORIGINS=https://staging.yourdomain.com
+    volumes:
+      - backend_logs:/app/logs
+    networks:
+      - institute_staging_network
+    restart: unless-stopped
+
+  # Public Website Service
+  public-website:
+    build:
+      context: ./public-website
+      dockerfile: Dockerfile
+      args:
+        - BUILD_CONFIGURATION=staging
+    ports:
+      - "4300:80"
+    environment:
+      - API_URL=http://backend:8080/api
+      - PUBLIC_API_URL=http://backend:8080/api/public
+      - ENABLE_ANALYTICS=true
+      - ENABLE_SERVICE_WORKER=false
+      - LOG_LEVEL=warn
+      - ENABLE_ERROR_TRACKING=true
+    volumes:
+      - public_logs:/var/log/nginx
+    networks:
+      - institute_staging_network
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # Admin Dashboard Service
+  admin-dashboard:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    environment:
+      - API_URL=http://backend:8080/api
+      - ENABLE_ANALYTICS=true
+      - LOG_LEVEL=warn
+    volumes:
+      - admin_logs:/var/log/nginx
+    networks:
+      - institute_staging_network
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  backend_logs:
+    driver: local
+  public_logs:
+    driver: local
+  admin_logs:
+    driver: local
+
+networks:
+  institute_staging_network:
+    driver: bridge

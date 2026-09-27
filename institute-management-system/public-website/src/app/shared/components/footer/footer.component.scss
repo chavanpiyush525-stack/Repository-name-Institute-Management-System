@@ -1,0 +1,256 @@
+.footer {
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  color: #f9fafb;
+  margin-top: auto;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 3rem 0 2rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 4rem 0 2rem;
+  }
+}
+
+.footer-section {
+  .section-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #ffffff;
+  }
+}
+
+// Institute Information Section
+.institute-info {
+  .footer-logo {
+    margin-bottom: 1rem;
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #60a5fa;
+      margin: 0;
+    }
+  }
+
+  .institute-description {
+    color: #d1d5db;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1rem;
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: #d1d5db;
+      transition: all 0.3s ease;
+      text-decoration: none;
+
+      &:hover {
+        background: #60a5fa;
+        color: #ffffff;
+        transform: translateY(-2px);
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
+
+// Quick Links Section
+.quick-links {
+  .link-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin-bottom: 0.75rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .footer-link {
+      color: #d1d5db;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #60a5fa;
+      }
+    }
+  }
+}
+
+// Contact Information Section
+.contact-info {
+  .contact-details {
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .contact-icon {
+        color: #60a5fa;
+        margin-top: 0.125rem;
+        flex-shrink: 0;
+      }
+
+      span {
+        color: #d1d5db;
+        line-height: 1.5;
+      }
+
+      .contact-link {
+        color: #d1d5db;
+        text-decoration: none;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #60a5fa;
+        }
+      }
+    }
+  }
+}
+
+// Footer Bottom
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 0;
+
+  .footer-bottom-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 0;
+    }
+
+    .copyright {
+      color: #9ca3af;
+      font-size: 0.875rem;
+      margin: 0;
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 1.5rem;
+
+      .footer-bottom-link {
+        color: #9ca3af;
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #60a5fa;
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 767px) {
+  .footer-content {
+    text-align: center;
+  }
+
+  .contact-info .contact-details .contact-item {
+    justify-content: center;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+}
+
+// Accessibility improvements
+@media (prefers-reduced-motion: reduce) {
+  .social-link,
+  .footer-link,
+  .contact-link,
+  .footer-bottom-link {
+    transition: none;
+  }
+
+  .social-link:hover {
+    transform: none;
+  }
+}
+
+// Focus styles for accessibility
+.social-link:focus,
+.footer-link:focus,
+.contact-link:focus,
+.footer-bottom-link:focus {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .footer {
+    background: #000000;
+    color: #ffffff;
+  }
+
+  .social-link {
+    background: #ffffff;
+    color: #000000;
+
+    &:hover {
+      background: #0000ff;
+      color: #ffffff;
+    }
+  }
+
+  .footer-link:hover,
+  .contact-link:hover,
+  .footer-bottom-link:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+}

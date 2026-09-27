@@ -1,0 +1,106 @@
+<div class="course-search">
+  <div class="search-container">
+    <div class="search-input-wrapper">
+      <div class="search-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </div>
+      
+      <input
+        type="text"
+        [value]="searchTerm"
+        (input)="onSearchInput($event)"
+        (focus)="onSearchFocus()"
+        (blur)="onSearchBlur()"
+        (keydown)="onKeyDown($event)"
+        [placeholder]="placeholder"
+        class="search-input"
+        [class.has-suggestions]="showSuggestionsList"
+        [disabled]="isLoading"
+        autocomplete="off"
+        role="combobox"
+        [attr.aria-expanded]="showSuggestionsList"
+        [attr.aria-activedescendant]="selectedSuggestionIndex >= 0 ? 'suggestion-' + selectedSuggestionIndex : null"
+      >
+      
+      <div class="search-actions">
+        <div class="loading-indicator" *ngIf="isLoading">
+          <div class="spinner"></div>
+        </div>
+        
+        <button
+          *ngIf="searchTerm && !isLoading"
+          (click)="clearSearch()"
+          class="clear-search-btn"
+          type="button"
+          aria-label="Clear search"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Search Suggestions Dropdown -->
+    <div 
+      class="suggestions-dropdown"
+      *ngIf="showSuggestionsList && suggestions.length > 0"
+      role="listbox"
+    >
+      <div class="suggestions-header">
+        <span class="suggestions-title">Suggestions</span>
+        <span class="suggestions-count">{{ suggestions.length }} found</span>
+      </div>
+      
+      <ul class="suggestions-list">
+        <li
+          *ngFor="let suggestion of suggestions; let i = index"
+          (click)="selectSuggestion(suggestion)"
+          [class.selected]="i === selectedSuggestionIndex"
+          class="suggestion-item"
+          [class]="'suggestion-' + suggestion.type"
+          [id]="'suggestion-' + i"
+          role="option"
+          [attr.aria-selected]="i === selectedSuggestionIndex"
+        >
+          <div class="suggestion-content">
+            <span class="suggestion-icon">{{ getSuggestionIcon(suggestion.type) }}</span>
+            <div class="suggestion-text">
+              <span 
+                class="suggestion-label" 
+                [innerHTML]="highlightMatch(suggestion.label, searchTerm)"
+              ></span>
+              <span class="suggestion-type">{{ suggestion.type }}</span>
+            </div>
+            <span class="suggestion-count" *ngIf="suggestion.count">
+              {{ suggestion.count }}
+            </span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- No Suggestions Message -->
+    <div 
+      class="no-suggestions"
+      *ngIf="showSuggestionsList && suggestions.length === 0 && searchTerm.length > 0 && !isLoading"
+    >
+      <div class="no-suggestions-content">
+        <span class="no-suggestions-icon">🔍</span>
+        <span class="no-suggestions-text">No suggestions found for "{{ searchTerm }}"</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Tips -->
+  <div class="search-tips" *ngIf="!searchTerm && !showSuggestionsList">
+    <div class="search-tip">
+      <span class="tip-icon">💡</span>
+      <span class="tip-text">Try searching by course name, category, or instructor</span>
+    </div>
+  </div>
+</div>

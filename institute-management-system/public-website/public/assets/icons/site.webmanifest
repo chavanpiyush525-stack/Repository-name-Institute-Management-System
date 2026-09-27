@@ -1,0 +1,22 @@
+{
+  "name": "Institute Management System",
+  "short_name": "Institute",
+  "description": "Quality education and training institute",
+  "icons": [
+    {
+      "src": "/assets/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#2563eb",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/"
+}

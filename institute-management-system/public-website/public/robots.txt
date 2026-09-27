@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: /sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Disallow admin paths (if any)
+Disallow: /admin/
+Disallow: /api/admin/
+
+# Allow important paths
+Allow: /courses/
+Allow: /about
+Allow: /contact

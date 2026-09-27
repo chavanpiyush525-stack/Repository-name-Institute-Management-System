@@ -1,0 +1,17 @@
+.home-page {
+  // Remove any default padding/margins to let sections handle their own spacing
+  margin: 0;
+  padding: 0;
+  
+  // Ensure smooth scrolling between sections
+  scroll-behavior: smooth;
+  
+  // Each section component handles its own styling
+  app-hero-section,
+  app-features-section,
+  app-testimonials-section,
+  app-cta-section {
+    display: block;
+    width: 100%;
+  }
+}

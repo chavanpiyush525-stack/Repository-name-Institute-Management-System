@@ -1,0 +1,278 @@
+.navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+
+  &.scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+
+// Brand/Logo
+.nav-brand {
+  .brand-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2563eb;
+      letter-spacing: -0.025em;
+    }
+  }
+}
+
+// Desktop Navigation
+.desktop-menu {
+  display: none;
+
+  @media (min-width: 768px) {
+    display: block;
+  }
+
+  .nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2rem;
+  }
+
+  .nav-item {
+    position: relative;
+  }
+
+  .nav-link {
+    text-decoration: none;
+    color: #374151;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+    position: relative;
+
+    &:hover {
+      color: #2563eb;
+    }
+
+    &.active {
+      color: #2563eb;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #2563eb;
+        border-radius: 1px;
+      }
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: #2563eb;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    &:hover::before {
+      width: 100%;
+    }
+  }
+}
+
+// Mobile Menu Toggle
+.mobile-menu-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+
+  .hamburger-line {
+    width: 24px;
+    height: 2px;
+    background: #374151;
+    transition: all 0.3s ease;
+    transform-origin: center;
+
+    &:not(:last-child) {
+      margin-bottom: 4px;
+    }
+  }
+
+  &.active {
+    .hamburger-line {
+      &:nth-child(1) {
+        transform: rotate(45deg) translate(3px, 3px);
+      }
+
+      &:nth-child(2) {
+        opacity: 0;
+        transform: scale(0);
+      }
+
+      &:nth-child(3) {
+        transform: rotate(-45deg) translate(3px, -3px);
+      }
+    }
+  }
+}
+
+// Mobile Navigation
+.mobile-menu {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  background: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+
+  &.open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 1rem 0;
+  }
+
+  .nav-item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .nav-link {
+    display: block;
+    text-decoration: none;
+    color: #374151;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+    transition: all 0.3s ease;
+
+    &:hover,
+    &.active {
+      color: #2563eb;
+      background: rgba(37, 99, 235, 0.05);
+    }
+  }
+}
+
+// Mobile Overlay
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+// Smooth scrolling behavior
+html {
+  scroll-behavior: smooth;
+}
+
+// Accessibility improvements
+@media (prefers-reduced-motion: reduce) {
+  .navigation,
+  .nav-link,
+  .mobile-menu,
+  .hamburger-line {
+    transition: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+// Focus styles for accessibility
+.nav-link:focus,
+.mobile-menu-toggle:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .navigation {
+    background: white;
+    border-bottom: 2px solid black;
+  }
+
+  .nav-link {
+    color: black;
+
+    &:hover,
+    &.active {
+      color: #0000ff;
+    }
+  }
+}

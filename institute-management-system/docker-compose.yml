@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: institute-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: institute-frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+
+  db:
+    image: mysql:8
+    container_name: institute-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: institute_db
+    ports:
+      - "3306:3306"

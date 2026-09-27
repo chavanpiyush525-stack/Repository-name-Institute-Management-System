@@ -1,0 +1,129 @@
+/* Global Styles - Design System */
+
+// Import design system components
+@import 'styles/variables';
+@import 'styles/typography';
+@import 'styles/components';
+@import 'styles/animations';
+@import 'styles/responsive';
+@import 'styles/utilities';
+
+// Reset and base styles
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+// Focus styles for accessibility
+*:focus {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: var(--border-radius-sm);
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+// Basic icon classes (using Unicode symbols as placeholders)
+.icon-building::before { content: '🏢'; }
+.icon-target::before { content: '🎯'; }
+.icon-eye::before { content: '👁️'; }
+.icon-user::before { content: '👤'; }
+.icon-star::before { content: '⭐'; }
+.icon-lightbulb::before { content: '💡'; }
+.icon-shield::before { content: '🛡️'; }
+.icon-graduation-cap::before { content: '🎓'; }
+.icon-users::before { content: '👥'; }
+.icon-book::before { content: '📚'; }
+.icon-award::before { content: '🏆'; }
+.icon-briefcase::before { content: '💼'; }
+.icon-handshake::before { content: '🤝'; }
+.icon-monitor::before { content: '💻'; }
+
+// Icon base styles
+[class*="icon-"] {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+}/* Laz
+y Loading Image Styles */
+img.lazy-loading {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+img.lazy-loaded {
+  opacity: 1;
+}
+
+img.lazy-error {
+  opacity: 0.5;
+  background: #f5f5f5;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Performance optimizations */
+* {
+  box-sizing: border-box;
+}
+
+/* Reduce layout shifts */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Optimize font loading */
+@font-face {
+  font-display: swap;
+}
+
+/* Critical CSS inlining hint */
+.above-fold {
+  contain: layout style paint;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

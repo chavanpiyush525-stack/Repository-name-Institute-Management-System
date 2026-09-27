@@ -1,0 +1,125 @@
+<div class="courses-page">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container">
+      <h1 class="page-title">Our Courses</h1>
+      <p class="page-subtitle">Discover our comprehensive range of courses designed to help you achieve your goals</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Enhanced Search Component -->
+    <div class="search-section">
+      <app-course-search [searchTerm]="filterValues.searchTerm"
+        [suggestions]="getFilteredSuggestions(filterValues.searchTerm)" [isLoading]="isLoading"
+        (searchChange)="onSearchChange($event)" (suggestionSelect)="onSuggestionSelect($event)"
+        placeholder="Search courses by name, description, category, or instructor..."></app-course-search>
+    </div>
+
+    <!-- Enhanced Filters Component -->
+    <app-course-filters [filterOptions]="filterOptions" [filterValues]="filterValues" [totalResults]="allCourses.length"
+      [filteredResults]="filteredCourses.length" [isLoading]="isLoading" (filterChange)="onFilterChange($event)"
+      (clearFilters)="onClearFilters()"></app-course-filters>
+
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="isLoading">
+      <div class="loading-spinner"></div>
+      <p>Loading courses...</p>
+    </div>
+
+    <!-- Error State -->
+    <div class="error-state" *ngIf="error && !isLoading">
+      <div class="error-message">
+        <h3>Unable to load courses</h3>
+        <p>{{ error }}</p>
+        <button (click)="loadCourses()" class="retry-btn">Try Again</button>
+      </div>
+    </div>
+
+    <!-- No Results State -->
+    <div class="no-results" *ngIf="!isLoading && !error && filteredCourses.length === 0 && allCourses.length > 0">
+      <div class="no-results-message">
+        <h3>No courses found</h3>
+        <p>Try adjusting your search criteria or filters.</p>
+        <button (click)="onClearFilters()" class="clear-filters-btn">Clear All Filters</button>
+      </div>
+    </div>
+
+    <!-- Course Grid -->
+    <div class="courses-grid" *ngIf="!isLoading && !error && displayedCourses.length > 0">
+      <div *ngFor="let course of displayedCourses" class="course-card" [routerLink]="['/courses', course.id]">
+        <div class="course-card-header">
+          <div class="course-category" *ngIf="course.category">
+            {{ course.category }}
+          </div>
+          <div class="course-level" *ngIf="course.level" [class]="'level-' + course.level.toLowerCase()">
+            {{ course.level }}
+          </div>
+        </div>
+
+        <div class="course-card-body">
+          <h3 class="course-title">{{ course.name }}</h3>
+          <p class="course-description">{{ course.description }}</p>
+
+          <div class="course-meta">
+            <div class="course-duration" *ngIf="course.duration">
+              <i class="icon">⏱️</i>
+              <span>{{ course.duration }}</span>
+            </div>
+            <div class="course-instructor" *ngIf="course.instructor">
+              <i class="icon">👨‍🏫</i>
+              <span>{{ course.instructor }}</span>
+            </div>
+          </div>
+
+          <div class="course-stats" *ngIf="course.rating || course.studentsEnrolled">
+            <div class="course-rating" *ngIf="course.rating">
+              <span class="stars">
+                <span *ngFor="let star of [1,2,3,4,5]" class="star" [class.filled]="star <= (course.rating || 0)">
+                  ⭐
+                </span>
+              </span>
+              <span class="rating-value">{{ course.rating }}/5</span>
+            </div>
+            <div class="course-enrollment" *ngIf="course.studentsEnrolled">
+              <i class="icon">👥</i>
+              <span>{{ course.studentsEnrolled }} students</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="course-card-footer">
+          <div class="course-price" *ngIf="course.price">
+            <span class="price">${{ course.price }}</span>
+          </div>
+          <div class="course-price" *ngIf="!course.price">
+            <span class="price free">Free</span>
+          </div>
+          <button class="view-course-btn">View Details</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="!isLoading && !error && totalPages > 1">
+      <button (click)="previousPage()" [disabled]="currentPage === 1" class="pagination-btn prev-btn">
+        ← Previous
+      </button>
+
+      <div class="page-numbers">
+        <button *ngFor="let page of getPageNumbers()" (click)="goToPage(page)" [class.active]="page === currentPage"
+          class="page-number-btn">
+          {{ page }}
+        </button>
+      </div>
+
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="pagination-btn next-btn">
+        Next →
+      </button>
+
+      <div class="pagination-info">
+        Page {{ currentPage }} of {{ totalPages }}
+      </div>
+    </div>
+  </div>
+</div>

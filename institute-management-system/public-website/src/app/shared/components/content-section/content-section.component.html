@@ -1,0 +1,125 @@
+<div class="content-section" [ngClass]="'section-' + section.type" *ngIf="hasContent()">
+  
+  <!-- Text Section -->
+  <div *ngIf="section.type === 'text'" class="text-section">
+    <div [ngClass]="containerClass">
+      <div class="text-content">
+        <h2 *ngIf="section.title" class="section-title">{{ section.title }}</h2>
+        <h3 *ngIf="section.subtitle" class="section-subtitle">{{ section.subtitle }}</h3>
+        <div *ngIf="section.content" class="section-content" [innerHTML]="section.content"></div>
+        <div *ngIf="section.link" class="section-link">
+          <a [routerLink]="!isExternalLink() ? section.link!.url : null" 
+             [href]="isExternalLink() ? section.link!.url : null"
+             [target]="getLinkTarget()"
+             [rel]="getLinkRel()"
+             class="btn btn-primary">
+            {{ section.link.text }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Section -->
+  <div *ngIf="section.type === 'image'" class="image-section">
+    <div [ngClass]="containerClass">
+      <div class="image-content">
+        <h2 *ngIf="section.title" class="section-title">{{ section.title }}</h2>
+        <div class="image-wrapper">
+          <img [src]="section.imageUrl" 
+               [alt]="section.title || 'Content image'"
+               class="content-image"
+               loading="lazy">
+        </div>
+        <p *ngIf="section.content" class="image-caption">{{ section.content }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video Section -->
+  <div *ngIf="section.type === 'video'" class="video-section">
+    <div [ngClass]="containerClass">
+      <div class="video-content">
+        <h2 *ngIf="section.title" class="section-title">{{ section.title }}</h2>
+        <div class="video-wrapper">
+          <iframe [src]="section.videoUrl" 
+                  frameborder="0" 
+                  allowfullscreen
+                  class="content-video">
+          </iframe>
+        </div>
+        <p *ngIf="section.content" class="video-description">{{ section.content }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery Section -->
+  <div *ngIf="section.type === 'gallery'" class="gallery-section">
+    <div [ngClass]="containerClass">
+      <div class="gallery-content">
+        <h2 *ngIf="section.title" class="section-title">{{ section.title }}</h2>
+        <div class="gallery-grid">
+          <div *ngFor="let image of section.images; let i = index" class="gallery-item">
+            <img [src]="image" 
+                 [alt]="section.title + ' - Image ' + (i + 1)"
+                 class="gallery-image"
+                 loading="lazy">
+          </div>
+        </div>
+        <p *ngIf="section.content" class="gallery-description">{{ section.content }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Section -->
+  <div *ngIf="section.type === 'stats'" class="stats-section">
+    <div [ngClass]="containerClass">
+      <div class="stats-content">
+        <h2 *ngIf="section.title" class="section-title">{{ section.title }}</h2>
+        <div class="stats-grid">
+          <div *ngFor="let stat of getStats()" class="stat-item">
+            <div class="stat-value">{{ stat.value }}</div>
+            <div class="stat-label">{{ stat.label }}</div>
+          </div>
+        </div>
+        <p *ngIf="section.content" class="stats-description">{{ section.content }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Action Section -->
+  <div *ngIf="section.type === 'cta'" class="cta-section">
+    <div [ngClass]="containerClass">
+      <div class="cta-content">
+        <h2 *ngIf="section.title" class="cta-title">{{ section.title }}</h2>
+        <p *ngIf="section.content" class="cta-description">{{ section.content }}</p>
+        <div *ngIf="section.link" class="cta-button">
+          <a [routerLink]="!isExternalLink() ? section.link!.url : null" 
+             [href]="isExternalLink() ? section.link!.url : null"
+             [target]="getLinkTarget()"
+             [rel]="getLinkRel()"
+             class="btn btn-cta">
+            {{ section.link.text }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonial Section -->
+  <div *ngIf="section.type === 'testimonial'" class="testimonial-section">
+    <div [ngClass]="containerClass">
+      <div class="testimonial-content">
+        <h2 *ngIf="section.title" class="section-title">{{ section.title }}</h2>
+        <blockquote class="testimonial-quote">
+          <p>{{ section.content }}</p>
+          <footer *ngIf="section.metadata?.['author']">
+            <cite>{{ section.metadata?.['author'] }}</cite>
+            <span *ngIf="section.metadata?.['role']" class="author-role">{{ section.metadata?.['role'] }}</span>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+
+</div>

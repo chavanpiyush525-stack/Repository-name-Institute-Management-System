@@ -1,0 +1,65 @@
+{
+  "timestamp": "2025-10-18T09:44:34.445Z",
+  "optimizations": [
+    {
+      "category": "Images",
+      "status": "info",
+      "message": "No image files found in src directory"
+    },
+    {
+      "category": "Bundle",
+      "status": "success",
+      "message": "✓ Build optimization enabled"
+    },
+    {
+      "category": "Bundle",
+      "status": "success",
+      "message": "✓ Output hashing enabled for caching"
+    },
+    {
+      "category": "Bundle",
+      "status": "success",
+      "message": "✓ Bundle size budgets configured"
+    },
+    {
+      "category": "Lazy Loading",
+      "status": "success",
+      "message": "✓ Lazy route loading implemented"
+    },
+    {
+      "category": "Lazy Loading",
+      "status": "success",
+      "message": "✓ Lazy image loading directive available"
+    },
+    {
+      "category": "Caching",
+      "status": "success",
+      "message": "✓ Service worker configuration found"
+    },
+    {
+      "category": "Caching",
+      "status": "info",
+      "message": "ℹ️  No HTTP caching interceptors found"
+    },
+    {
+      "category": "Assets",
+      "status": "info",
+      "message": "ℹ️  Found 26 SCSS files for optimization"
+    },
+    {
+      "category": "Assets",
+      "status": "success",
+      "message": "✓ Performance monitoring service implemented"
+    },
+    {
+      "category": "Assets",
+      "status": "success",
+      "message": "✓ Lighthouse CI configuration found"
+    }
+  ],
+  "summary": {
+    "success": 8,
+    "warnings": 0,
+    "info": 3
+  }
+}

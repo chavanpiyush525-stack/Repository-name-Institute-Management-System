@@ -1,0 +1,74 @@
+<nav class="navigation" role="navigation" aria-label="Main navigation">
+  <div class="nav-container">
+    <!-- Logo/Brand -->
+    <div class="nav-brand">
+      <a routerLink="/" class="brand-link" (click)="closeMobileMenu()">
+        <div class="logo">
+          <span class="logo-text">Institute</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <div class="nav-menu desktop-menu">
+      <ul class="nav-list">
+        @for (item of navigationItems; track item.route) {
+          <li class="nav-item">
+            <a 
+              [routerLink]="item.route"
+              [class.active]="isActiveRoute(item.route)"
+              class="nav-link"
+              (click)="item.fragment ? scrollToSection(item.fragment) : null"
+            >
+              {{ item.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button 
+      class="mobile-menu-toggle"
+      [class.active]="isMobileMenuOpen()"
+      (click)="toggleMobileMenu()"
+      aria-label="Toggle mobile menu"
+      [attr.aria-expanded]="isMobileMenuOpen()"
+    >
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+
+    <!-- Mobile Navigation -->
+    <div 
+      class="nav-menu mobile-menu"
+      [class.open]="isMobileMenuOpen()"
+      [attr.aria-hidden]="!isMobileMenuOpen()"
+    >
+      <ul class="nav-list">
+        @for (item of navigationItems; track item.route) {
+          <li class="nav-item">
+            <a 
+              [routerLink]="item.route"
+              [class.active]="isActiveRoute(item.route)"
+              class="nav-link"
+              (click)="closeMobileMenu()"
+            >
+              {{ item.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  @if (isMobileMenuOpen()) {
+    <div 
+      class="mobile-overlay"
+      (click)="closeMobileMenu()"
+      aria-hidden="true"
+    ></div>
+  }
+</nav>

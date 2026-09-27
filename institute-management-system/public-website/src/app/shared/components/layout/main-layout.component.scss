@@ -1,0 +1,15 @@
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 70px; // Account for fixed navigation height
+  
+  // Ensure content doesn't get hidden behind fixed navigation
+  @media (max-width: 767px) {
+    padding-top: 70px;
+  }
+}

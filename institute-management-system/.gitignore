@@ -1,0 +1,16 @@
+# Maven / Gradle
+target/
+build/
+
+# Node / Angular
+node_modules/
+dist/
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db

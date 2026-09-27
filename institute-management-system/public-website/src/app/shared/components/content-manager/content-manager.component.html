@@ -1,0 +1,129 @@
+<!-- Content Manager Toggle Button -->
+<button class="content-manager-toggle" (click)="toggle()" [class.active]="isVisible">
+  <span class="icon">⚙️</span>
+  Content Manager
+</button>
+
+<!-- Content Manager Panel -->
+<div class="content-manager-panel" [class.visible]="isVisible">
+  <div class="panel-header">
+    <h3>Content Manager</h3>
+    <button class="close-button" (click)="toggle()">×</button>
+  </div>
+
+  <div class="panel-content">
+    <!-- Page Selection -->
+    <div class="section">
+      <label for="pageSelect">Select Page:</label>
+      <select id="pageSelect" [(ngModel)]="selectedPageId" (change)="loadConfig()">
+        <option value="about">About Page</option>
+        <option value="home">Home Page</option>
+      </select>
+    </div>
+
+    <!-- Section List -->
+    <div class="section">
+      <div class="section-header">
+        <h4>Content Sections</h4>
+        <button class="btn btn-small btn-primary" (click)="createNewSection()">Add Section</button>
+      </div>
+
+      <div class="sections-list">
+        <div *ngFor="let section of getPageSections()" class="section-item" [class.hidden]="!section.visible">
+          <div class="section-info">
+            <span class="section-title">{{ section.title || section.type | titlecase }}</span>
+            <span class="section-type">{{ section.type }}</span>
+          </div>
+          <div class="section-actions">
+            <button class="btn-icon" (click)="moveSectionUp(section)" title="Move Up">↑</button>
+            <button class="btn-icon" (click)="moveSectionDown(section)" title="Move Down">↓</button>
+            <button class="btn-icon" (click)="toggleSectionVisibility(section)" 
+                    [title]="section.visible ? 'Hide' : 'Show'">
+              {{ section.visible ? '👁️' : '🙈' }}
+            </button>
+            <button class="btn-icon" (click)="editSection(section)" title="Edit">✏️</button>
+            <button class="btn-icon btn-danger" (click)="deleteSection(section.id)" title="Delete">🗑️</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Editor -->
+    <div *ngIf="selectedSectionId" class="section section-editor">
+      <h4>{{ selectedSectionId === 'new' ? 'Create New Section' : 'Edit Section' }}</h4>
+      
+      <div class="form-group">
+        <label for="sectionType">Section Type:</label>
+        <select id="sectionType" [(ngModel)]="editingSection.type">
+          <option *ngFor="let type of sectionTypes" [value]="type.value">{{ type.label }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="sectionTitle">Title:</label>
+        <input type="text" id="sectionTitle" [(ngModel)]="editingSection.title" placeholder="Section title">
+      </div>
+
+      <div class="form-group" *ngIf="editingSection.type === 'text' || editingSection.type === 'cta'">
+        <label for="sectionSubtitle">Subtitle:</label>
+        <input type="text" id="sectionSubtitle" [(ngModel)]="editingSection.subtitle" placeholder="Section subtitle">
+      </div>
+
+      <div class="form-group">
+        <label for="sectionContent">Content:</label>
+        <textarea id="sectionContent" [(ngModel)]="editingSection.content" 
+                  placeholder="Section content" rows="4"></textarea>
+      </div>
+
+      <div class="form-group" *ngIf="editingSection.type === 'image'">
+        <label for="imageUrl">Image URL:</label>
+        <input type="url" id="imageUrl" [(ngModel)]="editingSection.imageUrl" placeholder="https://example.com/image.jpg">
+      </div>
+
+      <div class="form-group" *ngIf="editingSection.type === 'video'">
+        <label for="videoUrl">Video URL:</label>
+        <input type="url" id="videoUrl" [(ngModel)]="editingSection.videoUrl" placeholder="https://youtube.com/embed/...">
+      </div>
+
+      <div class="form-group" *ngIf="editingSection.type === 'cta'">
+        <label for="linkUrl">Link URL:</label>
+        <input type="text" id="linkUrl" [(ngModel)]="editingSection.link!.url" placeholder="/courses">
+        <label for="linkText">Link Text:</label>
+        <input type="text" id="linkText" [(ngModel)]="editingSection.link!.text" placeholder="Learn More">
+      </div>
+
+      <div class="form-group">
+        <label for="sectionOrder">Order:</label>
+        <input type="number" id="sectionOrder" [(ngModel)]="editingSection.order" min="1">
+      </div>
+
+      <div class="form-group">
+        <label>
+          <input type="checkbox" [(ngModel)]="editingSection.visible">
+          Visible
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" (click)="saveSection()">Save</button>
+        <button class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Configuration Management -->
+    <div class="section">
+      <h4>Configuration Management</h4>
+      <div class="config-actions">
+        <button class="btn btn-secondary" (click)="exportConfig()">Export Config</button>
+        <label class="btn btn-secondary file-input">
+          Import Config
+          <input type="file" accept=".json" (change)="importConfig($event)" hidden>
+        </label>
+        <button class="btn btn-danger" (click)="resetToDefault()">Reset to Default</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay -->
+<div class="content-manager-overlay" [class.visible]="isVisible" (click)="toggle()"></div>

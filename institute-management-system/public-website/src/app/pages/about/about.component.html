@@ -1,0 +1,195 @@
+<div class="about-page">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Loading institute information...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !isLoading" class="error-container">
+    <div class="error-message">
+      <h2>Unable to Load Information</h2>
+      <p>{{ error }}</p>
+      <button class="retry-button" (click)="loadInstituteInfo()">Try Again</button>
+    </div>
+  </div>
+
+  <!-- Content Mode Toggle (for demonstration) -->
+  <div *ngIf="!isLoading && !error" class="content-mode-toggle">
+    <button (click)="toggleContentMode()" class="toggle-button">
+      {{ showDynamicContent ? 'Switch to Static Content' : 'Switch to Dynamic Content' }}
+    </button>
+  </div>
+
+  <!-- Dynamic Content Sections -->
+  <div *ngIf="!isLoading && !error && showDynamicContent && hasDynamicContent()" class="dynamic-content">
+    <app-content-section 
+      *ngFor="let section of contentSections" 
+      [section]="section"
+      containerClass="container">
+    </app-content-section>
+  </div>
+
+  <!-- Static Content (Original Implementation) -->
+  <div *ngIf="!isLoading && !error && !showDynamicContent" class="about-content">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-title">{{ instituteInfo?.name || 'Our Institute' }}</h1>
+        <p class="hero-tagline">{{ instituteInfo?.tagline || 'Excellence in Education' }}</p>
+        <div class="hero-stats" *ngIf="instituteInfo?.statistics">
+          <div class="stat-item">
+            <span class="stat-number">{{ instituteInfo?.statistics?.yearsOfExperience }}+</span>
+            <span class="stat-label">Years of Excellence</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">{{ instituteInfo?.statistics?.totalStudents }}+</span>
+            <span class="stat-label">Students Trained</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">{{ instituteInfo?.statistics?.totalCourses }}+</span>
+            <span class="stat-label">Courses Offered</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">{{ instituteInfo?.statistics?.successRate }}%</span>
+            <span class="stat-label">Success Rate</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Institute Story Section -->
+    <section class="story-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Story</h2>
+          <div class="section-divider"></div>
+        </div>
+        <div class="story-content">
+          <div class="story-text">
+            <p class="story-description">{{ instituteInfo?.description || 'We are committed to providing quality education and training to help students achieve their career goals.' }}</p>
+            <div class="established-info" *ngIf="instituteInfo?.establishedYear">
+              <span class="established-label">Established in</span>
+              <span class="established-year">{{ instituteInfo?.establishedYear }}</span>
+            </div>
+          </div>
+          <div class="story-image">
+            <div class="image-placeholder">
+              <i class="icon-building"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission & Vision Section -->
+    <section class="mission-vision-section">
+      <div class="container">
+        <div class="mission-vision-grid">
+          <div class="mission-card">
+            <div class="card-icon">
+              <i class="icon-target"></i>
+            </div>
+            <h3>Our Mission</h3>
+            <p>{{ instituteInfo?.mission || 'To provide high-quality education and training that empowers students to achieve their professional goals and contribute meaningfully to society.' }}</p>
+          </div>
+          <div class="vision-card">
+            <div class="card-icon">
+              <i class="icon-eye"></i>
+            </div>
+            <h3>Our Vision</h3>
+            <p>{{ instituteInfo?.vision || 'To be a leading educational institution recognized for excellence in teaching, innovation, and student success.' }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section class="achievements-section" *ngIf="achievements && achievements.length > 0">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Achievements</h2>
+          <div class="section-divider"></div>
+        </div>
+        <div class="achievements-grid">
+          <div class="achievement-card" *ngFor="let achievement of achievements">
+            <div class="achievement-icon" *ngIf="achievement.icon">
+              <i [class]="achievement.icon"></i>
+            </div>
+            <div class="achievement-content">
+              <h4>{{ achievement.title }}</h4>
+              <p>{{ achievement.description }}</p>
+              <span class="achievement-year" *ngIf="achievement.year">{{ achievement.year }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Team</h2>
+          <div class="section-divider"></div>
+        </div>
+        <div class="team-grid">
+          <div class="team-member" *ngFor="let member of teamMembers">
+            <div class="member-image">
+              <img [src]="member.image" [alt]="member.name" *ngIf="member.image; else placeholderImage">
+              <ng-template #placeholderImage>
+                <div class="image-placeholder">
+                  <i class="icon-user"></i>
+                </div>
+              </ng-template>
+            </div>
+            <div class="member-info">
+              <h4>{{ member.name }}</h4>
+              <p class="member-role">{{ member.role }}</p>
+              <p class="member-bio" *ngIf="member.bio">{{ member.bio }}</p>
+              <div class="member-qualifications" *ngIf="member.qualifications && member.qualifications.length > 0">
+                <span class="qualification" *ngFor="let qualification of member.qualifications">{{ qualification }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Values</h2>
+          <div class="section-divider"></div>
+        </div>
+        <div class="values-grid">
+          <div class="value-card" *ngFor="let value of coreValues">
+            <div class="value-icon">
+              <i [class]="value.icon"></i>
+            </div>
+            <h4>{{ value.title }}</h4>
+            <p>{{ value.description }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Ready to Start Your Journey?</h2>
+          <p>Join thousands of students who have transformed their careers with our comprehensive courses.</p>
+          <div class="cta-buttons">
+            <a routerLink="/courses" class="btn btn-primary">Explore Courses</a>
+            <a routerLink="/contact" class="btn btn-secondary">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Content Manager -->
+  <app-content-manager></app-content-manager>
+</div>

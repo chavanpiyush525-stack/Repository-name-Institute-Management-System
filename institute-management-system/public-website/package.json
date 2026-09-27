@@ -1,0 +1,64 @@
+{
+  "name": "public-website",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "build:prod": "ng build --configuration production",
+    "build:staging": "ng build --configuration staging",
+    "build:analyze": "ng build --configuration production --stats-json && npx webpack-bundle-analyzer dist/public-website/stats.json",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "lighthouse": "npm run build:prod && npx lighthouse http://localhost:4300 --output=html --output-path=./lighthouse-report.html --chrome-flags=\"--headless\"",
+    "lighthouse:ci": "npm run build:prod && npx @lhci/cli autorun",
+    "perf:audit": "npm run build:prod && npm run lighthouse",
+    "perf:analyze": "npm run build:analyze",
+    "perf:test": "npm run perf:audit && npm run perf:analyze",
+    "docker:build": "docker build -t public-website .",
+    "docker:build:staging": "docker build --build-arg BUILD_CONFIGURATION=staging -t public-website:staging .",
+    "docker:run": "docker run -p 80:80 public-website",
+    "docker:run:staging": "docker run -p 80:80 public-website:staging"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "*.html",
+        "options": {
+          "parser": "angular"
+        }
+      }
+    ]
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "^20.3.0",
+    "@angular/compiler": "^20.3.0",
+    "@angular/core": "^20.3.0",
+    "@angular/forms": "^20.3.0",
+    "@angular/platform-browser": "^20.3.0",
+    "@angular/router": "^20.3.0",
+    "@angular/service-worker": "^20.3.6",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^20.3.4",
+    "@angular/cli": "^20.3.4",
+    "@angular/compiler-cli": "^20.3.0",
+    "@lhci/cli": "^0.13.0",
+    "@types/jasmine": "~5.1.0",
+    "jasmine-core": "~5.9.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "lighthouse": "^12.0.0",
+    "typescript": "~5.9.2",
+    "webpack-bundle-analyzer": "^4.10.2"
+  }
+}

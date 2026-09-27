@@ -1,0 +1,98 @@
+<section class="hero-mobile bg-gradient-shift relative overflow-hidden">
+  <!-- Animated Background -->
+  <div class="absolute inset-0 z-0">
+    <div class="animate-stagger">
+      <div class="shape shape-1 float animate-fade-in delay-100"></div>
+      <div class="shape shape-2 float animate-fade-in delay-300"></div>
+      <div class="shape shape-3 float animate-fade-in delay-500"></div>
+    </div>
+  </div>
+  
+  <!-- Hero Content -->
+  <div class="container relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-screen py-20">
+      
+      <!-- Text Content -->
+      <div class="hero-text animate-fade-in" [class.loading]="isLoading" appScrollReveal>
+        <h1 class="responsive-heading font-bold text-white mb-6">
+          <span class="block animate-slide-up">{{ instituteInfo?.name || 'Excellence Institute' }}</span>
+          <span class="block text-accent-300 animate-slide-up delay-200">{{ instituteInfo?.tagline || 'Empowering Minds, Shaping Futures' }}</span>
+        </h1>
+        
+        <p class="text-lead text-neutral-100 mb-8 animate-slide-up delay-300">
+          {{ instituteInfo?.description || 'Join thousands of students who have transformed their careers with our comprehensive courses and expert instruction.' }}
+        </p>
+        
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 mb-12 animate-slide-up delay-400">
+          <a 
+            routerLink="/courses" 
+            class="btn btn-primary btn-lg hover-lift interactive"
+            (click)="trackHeroCtaClick('explore_courses')"
+          >
+            <span>Explore Courses</span>
+            <i class="icon-arrow-right ml-2"></i>
+          </a>
+          <a 
+            routerLink="/contact" 
+            class="btn btn-outline btn-lg hover-lift interactive"
+            (click)="trackHeroCtaClick('get_started')"
+          >
+            <span>Get Started</span>
+          </a>
+        </div>
+        
+        <!-- Statistics -->
+        <div class="responsive-grid-3 gap-6 animate-stagger">
+          <div class="stat-item text-center lg:text-left">
+            <div class="text-4xl font-bold text-white mb-1">{{ instituteInfo?.statistics?.totalStudents || '5000' }}+</div>
+            <div class="text-neutral-300 text-sm uppercase tracking-wide">Students</div>
+          </div>
+          <div class="stat-item text-center lg:text-left">
+            <div class="text-4xl font-bold text-white mb-1">{{ instituteInfo?.statistics?.totalCourses || '50' }}+</div>
+            <div class="text-neutral-300 text-sm uppercase tracking-wide">Courses</div>
+          </div>
+          <div class="stat-item text-center lg:text-left">
+            <div class="text-4xl font-bold text-white mb-1">25+</div>
+            <div class="text-neutral-300 text-sm uppercase tracking-wide">Instructors</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Hero Image/Animation -->
+      <div class="hero-image hidden lg:block animate-fade-in delay-600" appScrollReveal="right">
+        <div class="relative">
+          <!-- Floating Cards -->
+          <div class="floating-elements animate-stagger">
+            <div class="card card-elevated floating-card card-1 hover-lift animate-fade-in delay-700">
+              <div class="card-body text-center">
+                <div class="text-3xl mb-2">📚</div>
+                <div class="font-medium">Quality Education</div>
+              </div>
+            </div>
+            <div class="card card-elevated floating-card card-2 hover-lift animate-fade-in delay-900">
+              <div class="card-body text-center">
+                <div class="text-3xl mb-2">🎓</div>
+                <div class="font-medium">Expert Instructors</div>
+              </div>
+            </div>
+            <div class="card card-elevated floating-card card-3 hover-lift animate-fade-in delay-1000">
+              <div class="card-body text-center">
+                <div class="text-3xl mb-2">💼</div>
+                <div class="font-medium">Career Growth</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center text-white animate-bounce">
+    <div class="w-6 h-10 border-2 border-white rounded-full flex justify-center mb-2">
+      <div class="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
+    </div>
+    <span class="text-sm">Scroll to explore</span>
+  </div>
+</section>

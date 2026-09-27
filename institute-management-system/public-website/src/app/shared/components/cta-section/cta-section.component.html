@@ -1,0 +1,227 @@
+<section class="cta-section">
+  <!-- Main CTA Banner -->
+  <div class="main-cta-banner">
+    <div class="container">
+      <div class="cta-content">
+        <div class="cta-text">
+          <h2 class="cta-title">Ready to Transform Your Career?</h2>
+          <p class="cta-subtitle">
+            Join thousands of successful graduates who have advanced their careers with our expert-led courses. 
+            Start your journey today and unlock your potential.
+          </p>
+          
+          <div class="cta-features">
+            <div class="feature-item">
+              <span class="feature-icon">✓</span>
+              <span>Expert Instructors</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon">✓</span>
+              <span>Hands-on Projects</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon">✓</span>
+              <span>Career Support</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon">✓</span>
+              <span>Industry Recognition</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="cta-actions">
+          <a 
+            routerLink="/courses" 
+            class="btn btn-primary btn-large"
+            (click)="trackCtaClick('explore_courses', 'main_banner', { buttonType: 'primary', section: 'hero_cta' })"
+          >
+            <span>Explore All Courses</span>
+            <i class="icon-arrow-right"></i>
+          </a>
+          
+          <a 
+            routerLink="/contact" 
+            class="btn btn-secondary btn-large"
+            (click)="trackCtaClick('contact_us', 'main_banner', { buttonType: 'secondary', section: 'hero_cta' })"
+          >
+            <span>Contact Us</span>
+          </a>
+        </div>
+      </div>
+      
+      <div class="cta-visual">
+        <div class="visual-container">
+          <div class="floating-elements">
+            <div class="floating-card card-success">
+              <div class="card-icon">🎉</div>
+              <div class="card-text">95% Success Rate</div>
+            </div>
+            <div class="floating-card card-career">
+              <div class="card-icon">🚀</div>
+              <div class="card-text">Career Growth</div>
+            </div>
+            <div class="floating-card card-support">
+              <div class="card-icon">🤝</div>
+              <div class="card-text">24/7 Support</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popular Courses CTA -->
+  <div class="popular-courses-cta">
+    <div class="container">
+      <div class="section-header">
+        <h3 class="section-title">Start with Our Most Popular Courses</h3>
+        <p class="section-subtitle">These courses have helped thousands of students achieve their career goals</p>
+      </div>
+      
+      <div class="courses-grid" [class.loading]="isLoading">
+        <div 
+          class="course-card" 
+          *ngFor="let course of popularCourses; let i = index"
+          [style.animation-delay]="(i * 0.1) + 's'"
+        >
+          <div class="course-header">
+            <div class="course-level">{{ course.level }}</div>
+            <div class="course-duration">{{ course.duration }}</div>
+          </div>
+          
+          <div class="course-content">
+            <h4 class="course-title">{{ course.name }}</h4>
+            <p class="course-description">{{ course.description }}</p>
+          </div>
+          
+          <div class="course-footer">
+            <div class="course-price">
+              <span class="price-label">Starting at</span>
+              <span class="price-value">${{ course.price }}</span>
+            </div>
+            
+            <a 
+              [routerLink]="['/courses', course.id]" 
+              class="btn btn-outline"
+              (click)="trackCtaClick('view_course', 'popular_courses', { courseId: course.id, courseName: course.name, coursePrice: course.price })"
+            >
+              Learn More
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="courses-cta-actions">
+        <a 
+          routerLink="/courses" 
+          class="btn btn-primary"
+          (click)="trackCtaClick('view_all_courses', 'popular_courses', { section: 'course_catalog_cta' })"
+        >
+          View All Courses
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact CTA -->
+  <div class="contact-cta">
+    <div class="container">
+      <div class="contact-cta-content">
+        <div class="contact-text">
+          <h3 class="contact-title">Have Questions? We're Here to Help!</h3>
+          <p class="contact-subtitle">
+            Our admissions team is ready to guide you through your learning journey. 
+            Get personalized course recommendations and answers to all your questions.
+          </p>
+          
+          <div class="contact-methods">
+            <div class="contact-method">
+              <div class="method-icon">📞</div>
+              <div class="method-info">
+                <span class="method-label">Call Us</span>
+                <span class="method-value">+1-234-567-8900</span>
+              </div>
+            </div>
+            
+            <div class="contact-method">
+              <div class="method-icon">✉️</div>
+              <div class="method-info">
+                <span class="method-label">Email Us</span>
+                <span class="method-value">info@institute.com</span>
+              </div>
+            </div>
+            
+            <div class="contact-method">
+              <div class="method-icon">💬</div>
+              <div class="method-info">
+                <span class="method-label">Live Chat</span>
+                <span class="method-value">Available 24/7</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="contact-actions">
+          <a 
+            routerLink="/contact" 
+            class="btn btn-primary btn-large"
+            (click)="trackCtaClick('contact_form', 'contact_cta', { section: 'contact_section', intent: 'inquiry' })"
+          >
+            <span>Get in Touch</span>
+            <i class="icon-message"></i>
+          </a>
+          
+          <div class="quick-info">
+            <p>Free consultation • No obligation • Quick response</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final CTA -->
+  <div class="final-cta">
+    <div class="container">
+      <div class="final-cta-content">
+        <h3 class="final-title">Don't Wait – Your Future Starts Today</h3>
+        <p class="final-subtitle">
+          Join our community of learners and take the first step towards your dream career.
+        </p>
+        
+        <div class="final-actions">
+          <a 
+            routerLink="/courses" 
+            class="btn btn-primary btn-xl"
+            (click)="trackCtaClick('get_started', 'final_cta', { section: 'final_conversion', buttonSize: 'xl', intent: 'enrollment' })"
+          >
+            Get Started Now
+          </a>
+        </div>
+        
+        <div class="trust-indicators">
+          <div class="trust-item">
+            <span class="trust-icon">🔒</span>
+            <span>Secure Enrollment</span>
+          </div>
+          <div class="trust-item">
+            <span class="trust-icon">💯</span>
+            <span>Money-back Guarantee</span>
+          </div>
+          <div class="trust-item">
+            <span class="trust-icon">🏆</span>
+            <span>Industry Certified</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Background Elements -->
+  <div class="background-elements">
+    <div class="bg-gradient gradient-1"></div>
+    <div class="bg-gradient gradient-2"></div>
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+  </div>
+</section>

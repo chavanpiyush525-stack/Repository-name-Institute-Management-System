@@ -1,0 +1,103 @@
+<section class="features-section">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="section-header">
+      <h2 class="section-title">Why Choose Our Institute?</h2>
+      <p class="section-subtitle">
+        Discover what makes us the preferred choice for thousands of students worldwide
+      </p>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="features-grid">
+      <div 
+        class="feature-card" 
+        *ngFor="let feature of features; let i = index"
+        [class.highlight]="feature.highlight"
+        [style.animation-delay]="(i * 0.1) + 's'"
+      >
+        <div class="feature-icon">
+          <span class="icon">{{ feature.icon }}</span>
+        </div>
+        <div class="feature-content">
+          <h3 class="feature-title">{{ feature.title }}</h3>
+          <p class="feature-description">{{ feature.description }}</p>
+        </div>
+        <div class="feature-overlay"></div>
+      </div>
+    </div>
+
+    <!-- Statistics Section -->
+    <div class="statistics-section">
+      <div class="statistics-header">
+        <h3>Our Impact in Numbers</h3>
+        <p>See how we've been making a difference in education</p>
+      </div>
+      
+      <div class="statistics-grid">
+        <div 
+          class="stat-card" 
+          *ngFor="let stat of statistics; let i = index"
+          [style.animation-delay]="(i * 0.2) + 's'"
+        >
+          <div class="stat-icon">
+            <span>{{ stat.icon }}</span>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number" [class.animated]="stat.animated" #statNumber>
+              {{ stat.value }}
+            </div>
+            <div class="stat-label">{{ stat.label }}</div>
+          </div>
+          <div class="stat-progress">
+            <div class="progress-bar" [class.animate]="stat.animated"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Highlights Section -->
+    <div class="highlights-section">
+      <div class="highlights-grid">
+        <div class="highlight-item">
+          <div class="highlight-icon">🌟</div>
+          <div class="highlight-content">
+            <h4>Industry Partnerships</h4>
+            <p>Direct connections with leading companies for internships and job placements</p>
+          </div>
+        </div>
+        
+        <div class="highlight-item">
+          <div class="highlight-icon">🚀</div>
+          <div class="highlight-content">
+            <h4>Innovation Focus</h4>
+            <p>Stay ahead with cutting-edge curriculum updated with latest industry trends</p>
+          </div>
+        </div>
+        
+        <div class="highlight-item">
+          <div class="highlight-icon">🎯</div>
+          <div class="highlight-content">
+            <h4>Personalized Learning</h4>
+            <p>Tailored learning paths that adapt to your pace and learning style</p>
+          </div>
+        </div>
+        
+        <div class="highlight-item">
+          <div class="highlight-icon">🏅</div>
+          <div class="highlight-content">
+            <h4>Certified Excellence</h4>
+            <p>Internationally recognized certifications that boost your career prospects</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Background Elements -->
+  <div class="background-elements">
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+    <div class="bg-shape shape-3"></div>
+  </div>
+</section>
